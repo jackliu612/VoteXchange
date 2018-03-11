@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<title>VoteXchange</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-blue.css">
+<style>
+tr{
+	color: rgb(0,0,0);
+}
+#wrapper {
+	text-align: center;
+}
+#yourdiv {
+	display: inline-block;
+}</style>
+<script>
+	function addBalance(x) {
+		if(typeof(Storage) !== "undefined") {
+			if (localStorage.balance) {
+				localStorage.balance = Number(localStorage.balance)+Number(x);
+			} else {
+				localStorage.balance = 1;
+			}
+		}
+		updateBalance();
+	}
+	function subBal(x) {
+		if(typeof(Storage) !== "undefined") {
+			if (localStorage.balance) {
+				if(Number(localStorage.balance)-Number(x)<0)
+				{
+					alert("Insufficient Funds!");
+				}else{
+					localStorage.balance = Number(localStorage.balance)-Number(x);
+				}
+			} else {
+				localStorage.balance = 1;
+			}
+		}
+		updateBalance();
+	}
+	function updateBalance(){
+		document.getElementById("bal").innerHTML = "Your Balance is: " + localStorage.balance;
+	}
+</script>
+<body class="w3-theme">
+	<div class="w3-sidebar w3-bar-block w3-card w3-animate-left w3-theme-l1" style="display:none" id="mySidebar"> 
+		<button class="w3-bar-item w3-button w3-large w3-theme-dark w3-xlarge" 
+		onclick="w3_close()">Close <span class="w3-tag w3-red w3-round w3-right w3-xlarge">&times;</span></button>
+		<a href="#" onclick="getHome()" class="w3-bar-item w3-button w3-theme-d3 w3-xlarge">Home</a>
+		<a href="#" class="w3-bar-item w3-button w3-theme-d2 w3-xlarge" onclick="getRedeem()">Redeem Points</a>
+		<a href="#" onclick="getHistory()" class="w3-bar-item w3-button w3-theme-d1 w3-xlarge">History</a>
+		<a href="#" onclick="getOpportunities()" class="w3-bar-item w3-button w3-theme w3-xlarge">Opportunities</a>
+		<a href="index.html" class="w3-bar-item w3-button w3-theme-l1 w3-xlarge">Log-out</a>
+
+	</div>
+
+	<div id="main" class="w3-theme">	
+		<button id="openNav" class="w3-button w3-blue w3-xlarge" 
+		onclick="w3_open()">&#9776;</button>
+		<div class="w3-container w3-blue">
+			<h1 class="w3-center w3-jumbo">Welcome User</h1>
+		</div>
+		<div id="wrapper">
+			<div id="bal" class="w3-center w3-xxlarge"></div>
+			<script>addBalance(0);</script>
+			<div id="yourdiv">
+				<button class='w3-button w3-theme-d2 w3-border w3-padding-large w3-large w3-margin-top' onclick='addBalance(1)'>Add 1 Point</button>
+				<table id="myTable" class="w3-table-all">
+					<tr class="w3-theme-d5">
+						<!--When a header is clicked, run the sortTable function, with a parameter, 0 for sorting by names, 1 for sorting by country:-->  
+						<th onclick="sortTable(0)">Event</th>
+						<th onclick="sortTable(1)">Date</th>
+						<th onclick="sortTable(2)">Points</th>
+					</tr>
+					<tr>
+						<td>Telephone Town Hall Meeting</td>
+						<td>March 14</td>
+						<td>5</td>
+					</tr>
+					<tr>
+						<td>Millennials on the Issues: A Community Discussion</td>
+						<td>March 12</td>
+						<td>4</td>
+					</tr>
+					<tr>
+						<td>2018 Constituent Visit to DC</td>
+						<td>April 25</td>
+						<td>3</td>
+					</tr>
+				</table>
+			</div>
+		</div>
+	</div>
+	<script>
+		function w3_open() {
+			document.getElementById("mySidebar").style.width = "25%";
+			document.getElementById("mySidebar").style.display = "block";
+			document.getElementById("myOverlay").style.display = "block";
+		}
+
+		function w3_close() {
+			document.getElementById("mySidebar").style.display = "none";
+			document.getElementById("myOverlay").style.display = "none";
+		}
+		function getHome() {
+			document.getElementById("yourdiv").innerHTML = '<table id="myTable" class="w3-table-all"><tr class="w3-theme-d5"><th onclick="sortTable(0)">Event</th><th onclick="sortTable(1)">Date</th><th onclick="sortTable(2)">Points</th></tr><tr><td>Telephone Town Hall Meeting</td><td>March 14</td><td>5</td></tr><tr><td>Millennials on the Issues: A Community Discussion</td><td>March 12</td><td>4</td></tr><tr><td>2018 Constituent Visit to DC</td><td>April 25</td><td>3</td></tr><button class="w3-button w3-theme-d2 w3-border w3-padding-large w3-large w3-margin-top" onclick="addBalance(1)">Add 1 Point</button>';
+		}
+		function getRedeem(){
+			document.getElementById("yourdiv").innerHTML = "<div><button class='w3-button w3-theme-d2 w3-border w3-padding-large w3-large w3-margin-top' onclick='subBal(5)'>Spend 5 Points for a $5 Amazon Gift Card</button></div><div><button class='w3-button w3-theme-d2 w3-border w3-padding-large w3-large w3-margin-top' onclick='subBal(10)'>Spend 10 Points for a Free Lyft Ride (up to $30)</button></div><div><button class='w3-button w3-theme-d2 w3-border w3-padding-large w3-large w3-margin-top' onclick='subBal(30)'>Spend 30 Points for a $100 Red Lobster Gift Card</button></div><div><button class='w3-button w3-theme-d2 w3-border w3-padding-large w3-large w3-margin-top' onclick='subBal(50)'>Spend 50 Points for a Hawiian Vacation</button></div>"
+		}
+		function getHistory() {
+			document.getElementById("yourdiv").innerHTML = '<table id="myTable" class="w3-table-all"><tr class="w3-theme-d5"><th onclick="sortTable(0)">Event</th><th onclick="sortTable(1)">Date</th><th onclick="sortTable(2)">Points</th></tr><tr><td>Constituent on the Issues: A Community Discussion</td><td>March 10</td><td>5</td></tr>';
+		}
+		function getOpportunities() {
+			document.getElementById("yourdiv").innerHTML = '<table id="myTable" class="w3-table-all"><tr class="w3-theme-d5"><th onclick="sortTable(0)">Event</th><th onclick="sortTable(1)">Date</th><th onclick="sortTable(2)">Points</th></tr><tr><td>Telephone Town Hall Meeting</td><td>March 14</td><td>5</td></tr><tr><td>Millennials on the Issue: A Community Discussion </td><td>March 12</td><td>4</td></tr><tr><td>2018 Constituent Visit to DC</td><td>April 25</td><td>3</td></tr><tr><td>Constituent Coffee</td><td>March 15</td><td>3</td></tr><tr><td>Inequality in America: A National Town Hall Riuniti</td><td>March 19</td><td>5</td></tr><button class="w3-button w3-theme-d2 w3-border w3-padding-large w3-large w3-margin-top" onclick="addBalance(1)">Add 1 Point</button>';
+		}
+// function w3_open() {
+//   document.getElementById("main").style.marginLeft = "25%";
+//   document.getElementById("mySidebar").style.width = "25%";
+//   document.getElementById("mySidebar").style.display = "block";
+//   document.getElementById("openNav").style.display = 'none';
+// }
+// function w3_close() {
+//   document.getElementById("main").style.marginLeft = "0%";
+//   document.getElementById("mySidebar").style.display = "none";
+//   document.getElementById("openNav").style.display = "inline-block";
+// }
+</script>
+<script>
+	function sortTable(n) {
+		var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+		table = document.getElementById("myTable");
+		switching = true;
+  //Set the sorting direction to ascending:
+  dir = "asc"; 
+  /*Make a loop that will continue until
+  no switching has been done:*/
+  while (switching) {
+    //start by saying: no switching is done:
+    switching = false;
+    rows = table.getElementsByTagName("TR");
+    /*Loop through all table rows (except the
+    first, which contains table headers):*/
+    for (i = 1; i < (rows.length - 1); i++) {
+      //start by saying there should be no switching:
+      shouldSwitch = false;
+      /*Get the two elements you want to compare,
+      one from current row and one from the next:*/
+      x = rows[i].getElementsByTagName("TD")[n];
+      y = rows[i + 1].getElementsByTagName("TD")[n];
+      /*check if the two rows should switch place,
+      based on the direction, asc or desc:*/
+      if (dir == "asc") {
+      	if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+          //if so, mark as a switch and break the loop:
+          shouldSwitch= true;
+          break;
+      }
+  } else if (dir == "desc") {
+  	if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+          //if so, mark as a switch and break the loop:
+          shouldSwitch= true;
+          break;
+      }
+  }
+}
+if (shouldSwitch) {
+      /*If a switch has been marked, make the switch
+      and mark that a switch has been done:*/
+      rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+      switching = true;
+      //Each time a switch is done, increase this count by 1:
+      switchcount ++;      
+  } else {
+      /*If no switching has been done AND the direction is "asc",
+      set the direction to "desc" and run the while loop again.*/
+      if (switchcount == 0 && dir == "asc") {
+      	dir = "desc";
+      	switching = true;
+      }
+  }
+}
+}
+</script>
+</body>
+
+</html>
